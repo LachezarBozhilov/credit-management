@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('credit_id')->constrained('credits');
+            $table->decimal('amount');
             $table->timestamps();
         });
     }

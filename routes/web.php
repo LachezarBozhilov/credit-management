@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CreditController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,7 +26,7 @@ Route::get('/', function () {
     //     'laravelVersion' => Application::VERSION,
     //     'phpVersion' => PHP_VERSION,
     // ]);
-    return Inertia::render("Auth/Login" ,[        
+    return Inertia::render("Auth/Login", [
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
@@ -40,7 +42,29 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// users
+Route::get('users', [UserController::class, 'index'])->name('users');
+// Route::get('credits/create', [CreditController::class, 'create'])->name('credits.create');
+// Route::post('credits', [CreditController::class, 'store'])->name('credits.store');
+// Route::get('users/{user}/edit' ,[CreditController::class, 'edit'])->name("credits.edit");
+// Route::put('users/{user}' ,[CreditController::class, 'update'])->name("credits.update");
+// Route::delete('users/{user}' ,[CreditController::class, 'delete'])->name("credits.delete");
+// credits
+Route::get('credits', [CreditController::class, 'index'])->name('credits');
+Route::get('credits/create', [CreditController::class, 'create'])->name('credits.create');
+Route::post('credits', [CreditController::class, 'store'])->name('credits.store');
+// Route::get('users/{user}/edit' ,[CreditController::class, 'edit'])->name("credits.edit");
+// Route::put('users/{user}' ,[CreditController::class, 'update'])->name("credits.update");
+// Route::delete('users/{user}' ,[CreditController::class, 'delete'])->name("credits.delete");
 
-Route::get('users', [UsersController::class, 'index'])->name( 'users');
 
-require __DIR__.'/auth.php';
+// payments
+Route::get('payments', [PaymentController::class, 'index'])->name('payments');
+Route::get('payments/create', [PaymentController::class, 'create'])->name('payments.create');
+Route::post('payments', [PaymentController::class, 'store'])->name('payments.store');
+// Route::get('users/{user}/edit' ,[CreditController::class, 'edit'])->name("credits.edit");
+// Route::put('users/{user}' ,[CreditController::class, 'update'])->name("credits.update");
+// Route::delete('users/{user}' ,[CreditController::class, 'delete'])->name("credits.delete");
+
+
+require __DIR__ . '/auth.php';

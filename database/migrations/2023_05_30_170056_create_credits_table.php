@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('credits', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->decimal('amount');
+            $table->integer('duration');
             $table->timestamps();
         });
     }

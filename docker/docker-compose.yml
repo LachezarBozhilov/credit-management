@@ -17,7 +17,7 @@ services:
       - DB_PASSWORD=secret
     networks:
       - app-network
-    # command: sh -c "npm run dev ---host 0.0.0.0"
+    command: sh -c "composer install && cp .env.example .env && php artisan key:generate && php artisan migrate:fresh --seed"
 
   db:
     image: mysql:8.0.33
@@ -54,7 +54,7 @@ services:
     working_dir: /var/www
     networks:
       - app-network
-    command: sh -c "ls -al && npm run dev"
+    command: sh -c "npm install && npm run dev"
 
   phpmyadmin:
     image: phpmyadmin

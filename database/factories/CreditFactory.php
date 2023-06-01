@@ -20,6 +20,7 @@ class CreditFactory extends Factory
             'name' => $this->faker->name,
             'amount' => $this->faker->numberBetween(1000, 100000),
             'duration' => $this->faker->numberBetween(1, 12),
+            'amount_paid' => 0.00,
         ];
     }
 }

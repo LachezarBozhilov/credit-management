@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import Table from "../../Components/Table";
 const Index = ({ auth }) => {
-    const { credits } = usePage().props;
+    const { credits ,flash } = usePage().props;
     const { data } = credits;
     console.warn("INDEX DATA", data);
     return (
@@ -30,6 +30,9 @@ const Index = ({ auth }) => {
             <Head title="Payment" />
 
             <div className="py-12">
+                <div className="flex justify-center">
+                    {flash.message && <div class="text-green-600">{flash.message}</div>}
+                </div>
                 <Table
                     headers={[
                         "id",
@@ -37,6 +40,7 @@ const Index = ({ auth }) => {
                         "amount",
                         "duration",
                         "monthly_payment",
+                        "amount_paid",
                         "created_at",
                         "updated_at",
                     ]}

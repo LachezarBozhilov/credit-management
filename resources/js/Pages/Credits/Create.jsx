@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 const Create = ({ auth }) => {
+    const { flash } = usePage().props;
     const { data, setData, post, processing, errors } = useForm({
         id: "",
         name: "",
@@ -37,6 +38,11 @@ const Create = ({ auth }) => {
                 </div>
             }
         >
+            <div className="flex justify-center">
+                {flash.message && (
+                    <div className="text-rose-600">{flash.message}</div>
+                )}
+            </div>
             <div className="w-full flex justify-center bg-white m-5">
                 <form name="createForm" onSubmit={handleSubmit}>
                     <div className="sm:col-span-3">
@@ -52,7 +58,7 @@ const Create = ({ auth }) => {
                             onChange={(e) => setData("name", e.target.value)}
                         />
                         {errors.name && (
-                            <div className="form-error">{errors.name}</div>
+                            <div className="text-rose-600">{errors.name}</div>
                         )}
                     </div>
                     <div className="sm:col-span-3">
@@ -67,8 +73,8 @@ const Create = ({ auth }) => {
                             placeholder="Enter amount"
                             onChange={(e) => setData("amount", e.target.value)}
                         />
-                        {errors.name && (
-                            <div className="form-error">{errors.amount}</div>
+                        {errors.amount && (
+                            <div className="text-rose-600">{errors.amount}</div>
                         )}
                     </div>
 
@@ -101,13 +107,15 @@ const Create = ({ auth }) => {
                             <option value="11">11</option>
                             <option value="12">12</option>
                         </select>
-                        {errors.diration && (
-                            <div className="form-error">{errors.duration}</div>
+                        {errors.duration && (
+                            <div className="text-rose-600">
+                                {errors.duration}
+                            </div>
                         )}
                     </div>
 
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                        <Link href={route("credits")}>
+                        <Link href={route("credits.index")}>
                             <button
                                 type="button"
                                 className="text-sm font-semibold leading-6 text-gray-900"

@@ -50,7 +50,7 @@ Route::get('users', [UserController::class, 'index'])->name('users');
 // Route::put('users/{user}' ,[CreditController::class, 'update'])->name("credits.update");
 // Route::delete('users/{user}' ,[CreditController::class, 'delete'])->name("credits.delete");
 // credits
-Route::get('credits', [CreditController::class, 'index'])->name('credits');
+Route::get('credits', [CreditController::class, 'index'])->name('credits.index');
 Route::get('credits/create', [CreditController::class, 'create'])->name('credits.create');
 Route::post('credits', [CreditController::class, 'store'])->name('credits.store');
 // Route::get('users/{user}/edit' ,[CreditController::class, 'edit'])->name("credits.edit");
@@ -59,7 +59,7 @@ Route::post('credits', [CreditController::class, 'store'])->name('credits.store'
 
 
 // payments
-Route::get('payments', [PaymentController::class, 'index'])->name('payments');
+Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
 Route::get('payments/create', [PaymentController::class, 'create'])->name('payments.create');
 Route::post('payments', [PaymentController::class, 'store'])->name('payments.store');
 // Route::get('users/{user}/edit' ,[CreditController::class, 'edit'])->name("credits.edit");

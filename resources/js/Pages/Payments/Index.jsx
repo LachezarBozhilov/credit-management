@@ -2,11 +2,14 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import Table from "../../Components/Table";
 const Index = ({ auth }) => {
-    const { payments } = usePage().props;
-    const { data } = payments;
+    const { payments, flash } = usePage().props;
+    const {
+        data,
+        meta: { links },
+    } = payments;
 
-    console.warn(data);
-    console.log("paymentssss falsh" , payments.flash)
+    // console.warn(data);
+    console.log("paymentssss flash", payments.flash);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -32,6 +35,11 @@ const Index = ({ auth }) => {
             <Head title="Payments" />
 
             <div className="py-12">
+                <div className="flex justify-center">
+                    {flash.message && (
+                        <div class="text-green-600">{flash.message}</div>
+                    )}
+                </div>
                 <Table
                     headers={[
                         "id",

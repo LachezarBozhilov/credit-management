@@ -1,23 +1,26 @@
 import React from "react";
-import { Link, useForm ,usePage} from "@inertiajs/react";
+import { Link, useForm ,usePage, router} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 const Create = ({ auth }) => {
-    const { credits } = usePage().props;
+    const { credits ,errors} = usePage().props;
     const  creditsParams  = credits.data;
 
-    console.warn("INDEX DATA",creditsParams ,credits.data);
+    // console.warn("INDEX DATA",creditsParams ,credits.data);
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing,  } = useForm({
         credit_id: "",
         amount: "",
-        duration: 0,
+        // duration: 0,
     });
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(route("payments.store"));
+        
+        router.post('/payments',data )
     }
+
+    console.warn(errors)
 
     return (
         <AuthenticatedLayout
@@ -62,8 +65,8 @@ const Create = ({ auth }) => {
                                return <option value={item.id}>{item.name} - {item.amount}</option>;
                             })}
                         </select>
-                        {errors.diration && (
-                            <div className="form-error">{errors.duration}</div>
+                        {errors.credit_id && (
+                            <div className="text-rose-600">{errors.credit_id}</div>
                         )}
                     </div>
                     <div className="sm:col-span-3">
@@ -78,47 +81,13 @@ const Create = ({ auth }) => {
                             placeholder="Enter amount"
                             onChange={(e) => setData("amount", e.target.value)}
                         />
-                        {errors.name && (
-                            <div className="form-error">{errors.amount}</div>
-                        )}
-                    </div>
-
-                    <div className="sm:col-span-3">
-                        <label
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                            htmlFor="duration"
-                        >
-                            Months duration:
-                        </label>
-
-                        <select
-                            id={"duration"}
-                            name={"duration"}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                            onChange={(e) =>
-                                setData("duration", e.target.value)
-                            }
-                        >
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        {errors.diration && (
-                            <div className="form-error">{errors.duration}</div>
+                        {errors.amount && (
+                            <div className="text-rose-600">{errors.amount}</div>
                         )}
                     </div>
 
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                        <Link href={route("credits")}>
+                        <Link href={route("payments.index")}>
                             <button
                                 type="button"
                                 className="text-sm font-semibold leading-6 text-gray-900"

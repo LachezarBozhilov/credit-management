@@ -20,6 +20,7 @@ class CreditCollection extends ResourceCollection
                 'name' => $item->name,
                 'amount' => $item->amount,
                 "monthly_payment" => round($item->amount / $item->duration,2),
+                "amount_paid" => $item->amount_paid,
                 'duration' => $item->duration,
                 'created_at' => $item->created_at->diffForHumans(),
                 'updated_at' => $item->updated_at->diffForHumans(),

@@ -18,7 +18,7 @@ class PaymentController extends Controller
         // dd(Credits::all())
         return Inertia::render('Payments/Index', [
             'payments' => new PaymentCollection(
-                Payment::paginate()
+                Payment::latest()->paginate()
             ),
         ]);
     }
@@ -35,26 +35,31 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'amoung' => 'required|unique:posts|max:255',
+            'amount' => 'required',
             'credit_id' => 'required',
-            
+
         ]);
 
         $credit = Credit::find($request->credit_id);
-        // dd($credit, $request);
-        
-        $remainingDebt = $credit->amount - $credit->payments()->sum('amount');
-        $paymentAmount = $request->amount;
-        if ($paymentAmount > $remainingDebt) {
-            $paymentAmount = $remainingDebt;
-        }
-      
+
         $payment = new Payment();
+        $paymentAmount = $request->amount;
         $payment->credit_id = $credit->id;
-        $payment->amount = $paymentAmount;
+
+        if ($paymentAmount > $credit->amount) {
+            $payment->amount = $credit->amount;
+        } else {
+            $payment->amount = $paymentAmount;
+        }
         $payment->save();
 
-        // return redirect()->route("")
-        return redirect()->route('payments')->with('status', 'Profile updated!');
+        $credit->amount_paid += $payment->amount;
+        $credit->save();
+
+        // dd($payment);
+        if ($payment) {
+            return to_route('payments.index')->with("message", "Successfully created Payment");
+        }
+        return to_route('payments.create', ["message" => ["errors" => "Failed to create payment"]]);
     }
 }

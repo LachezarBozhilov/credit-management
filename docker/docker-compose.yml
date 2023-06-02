@@ -17,7 +17,7 @@ services:
       - DB_PASSWORD=secret
     networks:
       - app-network
-    command: sh -c "composer install && cp .env.example .env && php artisan key:generate && php artisan migrate:fresh --seed"
+    command: sh -c "composer install && cp .env.example .env && php artisan key:generate && php artisan migrate:fresh --seed && php-fpm"
 
   db:
     image: mysql:8.0.33
